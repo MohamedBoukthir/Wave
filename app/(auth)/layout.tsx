@@ -1,14 +1,15 @@
 import { ClerkProvider } from "@clerk/nextjs"
 import { Inter } from 'next/font/google'
+import type { Metadata } from "next";
 
 import '../globals.css'
 
-export const metadata = {
-    title: 'Treads',
-    description: 'A Next.js 13 Application Developed By @MohamedBoukthir'
-}
-
 const inter = Inter({ subsets: ['latin'] })
+
+export const metadata: Metadata = {
+    title: 'Auth',
+    description: 'Developed By @MohamedBoukthir'
+}
 
 export default function RootLayout({
     children
