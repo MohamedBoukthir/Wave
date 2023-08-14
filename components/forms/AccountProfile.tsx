@@ -1,5 +1,6 @@
 "use client";
 
+import { usePathname, useRouter } from 'next/navigation';
 import { ChangeEvent, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod'
@@ -20,8 +21,10 @@ import * as z from "zod"
 import { UserValidation } from '@/lib/validations/user';
 import { isBase64Image } from '@/lib/utils';
 import { useUploadThing } from '@/lib/uploadthing'
+import { updateUser } from '@/lib/actions/user.action';
 
 import Image from 'next/image'
+
 
 
 
@@ -40,15 +43,17 @@ interface Props {
 
 const AccountProfile = ({ user, btnTitle }: Props) => {
   const [files, setFiles] = useState<File[]>([]);
-  const { startUpload } = useUploadThing('media');
+  const { startUpload } = useUploadThing("media");
+  const router = useRouter();
+  const pathname = usePathname();
 
     const form = useForm({
         resolver: zodResolver(UserValidation),
         defaultValues: {
-            profile_photo: user?.image || '' ,
-            name: user?.name || '' ,
-            username: user?.username || '' ,
-            bio: user?.bio || '' 
+            profile_photo: user?.image || "" ,
+            name: user?.name || "" ,
+            username: user?.username || "" ,
+            bio: user?.bio || "" 
         }      
     })
 
@@ -83,6 +88,20 @@ const AccountProfile = ({ user, btnTitle }: Props) => {
           if(imgRes && imgRes[0].fileUrl) {
             values.profile_photo = imgRes[0].fileUrl;
           }
+        }
+
+        await updateUser({
+            userId: user.id,
+            username: values.username,
+            name: values.name,
+            bio: values.bio,
+            image: values.profile_photo,
+            path: pathname
+          });
+        if (pathname === '/profile/edit') {
+          router.back();
+        } else {
+          router.push('/');
         }
       }
 
@@ -125,6 +144,7 @@ const AccountProfile = ({ user, btnTitle }: Props) => {
                         onChange={(e) => handleImage(e, field.onChange)}
                     />
                   </FormControl>
+                  <FormMessage/>
                 </FormItem>
               )}
             />
@@ -143,6 +163,7 @@ const AccountProfile = ({ user, btnTitle }: Props) => {
                         {...field}
                     />
                   </FormControl>
+                  <FormMessage/>
                 </FormItem>
               )}
             />
@@ -161,6 +182,7 @@ const AccountProfile = ({ user, btnTitle }: Props) => {
                         {...field}
                     />
                   </FormControl>
+                  <FormMessage/>
                 </FormItem>
               )}
             />
@@ -179,6 +201,7 @@ const AccountProfile = ({ user, btnTitle }: Props) => {
                         {...field}
                     />
                   </FormControl>
+                  <FormMessage/>
                 </FormItem>
               )}
             />
