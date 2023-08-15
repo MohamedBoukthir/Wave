@@ -1,3 +1,4 @@
+import WaveCard from "@/components/cards/WaveCard";
 import { fetchWaves } from "@/lib/actions/wave.action";
 import { currentUser } from "@clerk/nextjs";
 
@@ -18,7 +19,7 @@ export default async function Home() {
               <WaveCard
                 key={wave._id}
                 id={wave._id}
-                currentUserId={user?.id}
+                currentUserId={user?.id || ""}
                 parentId={wave.parentId}
                 content={wave.text}
                 author={wave.author}
