@@ -97,3 +97,42 @@ export async function fetchWaveById(id: string) {
         throw new Error(`Error fetching wave: ${error.message}`)
     }
 }
+
+export async function addCommentToWave(
+    waveId: string,
+    commentText: string,
+    userId: string,
+    path: string,
+) {
+    connectToDB();
+
+    try {
+
+        // find the original wave by ID
+        const originalWave = await Wave.findById(waveId);
+        if(!originalWave){
+            throw new Error ('Wave Not Found')
+        }
+
+        // create a new wave with comment text
+        const commmentWave = new Wave({
+            text: commentText,
+            author: userId,
+            parentId: waveId,
+        })
+
+        // save to the DB
+        const savedCommentWave = await commmentWave.save();
+
+        // update the original wave to include the new comment
+        originalWave.children.push(savedCommentWave._id);
+
+        // save the original wave
+        await originalWave.save();
+
+        revalidatePath(path);
+        
+    } catch (error: any) {
+        throw new Error(`Error adding comment to wave: ${error.message}`)
+    }
+}
