@@ -1,4 +1,5 @@
 import WaveCard from "@/components/cards/WaveCard";
+import Comment from "@/components/forms/Comment";
 import { fetchUser } from "@/lib/actions/user.action";
 import { fetchWaveById } from "@/lib/actions/wave.action";
 import { currentUser } from "@clerk/nextjs";
@@ -30,6 +31,13 @@ const Page = async ({ params }: { params: { id: string }}) => {
                 createdAt={wave.createdAt}
                 comments={wave.children}
                 />
+        </div>
+        <div className='mt-7'>
+            <Comment 
+                waveId={wave.id}
+                currentUserImg={user.imageUrl}
+                currentUserId={JSON.stringify(userInfo._id)}
+            />
         </div>
     </section>
     )
