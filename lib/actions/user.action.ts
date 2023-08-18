@@ -3,6 +3,7 @@
 import { revalidatePath } from "next/cache";
 import User from "../models/user.model";
 import { connectToDB } from "../mongoose";
+import Wave from "../models/wave.model";
 
 interface Params {
     userId: string;
@@ -58,5 +59,31 @@ export async function fetchUser(userId: string) {
         //})
     } catch (error: any) {
         throw new Error(`Failed to Fetch user: ${error.message}`)
+    }
+}
+
+// fetch user waves
+export async function fetchUserPosts(userId: string) {
+    try {
+        connectToDB();
+
+        // find all waves authored by user
+        const waves = await User.findOne({ id: userId })
+        .populate({
+            path: 'waves',
+            model: Wave,
+            populate: {
+                path: 'children',
+                model: Wave,
+                populate: {
+                    path: 'author',
+                    model: User,
+                    select: 'name image id'
+                }
+            }
+        }) 
+        return waves;
+    } catch (error: any) {
+        throw new Error (`failed to fetch user posts ${error.message}`)
     }
 }
