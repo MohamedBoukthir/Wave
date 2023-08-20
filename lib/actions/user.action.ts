@@ -138,3 +138,31 @@ export async function fetchUsers({
         throw new Error(`failed to fetch users: ${error.message}`)
     }
 }
+
+// Get Notification
+export async function getNotification(userId: string) {
+    try {
+       connectToDB();
+       
+       // find all waves created by the user
+       const userWaves = await Wave.find({ author: userId });
+
+       // collect all replies from children field
+       const childWaveIds = userWaves.reduce((acc, userWave) => {
+        return acc.concat(userWave.children)
+       }, [])
+
+       const replies = await Wave.find({
+        _id: { $in: childWaveIds },
+        author: { $ne: userId }
+       }).populate({
+        path: 'author',
+        model: User,
+        select: 'name image _id'
+       })
+
+       return replies;
+    } catch (error: any) {
+        throw new Error(`failed to get notification: ${error.message}`)
+    }
+}
