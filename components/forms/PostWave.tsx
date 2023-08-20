@@ -34,6 +34,7 @@ interface Props {
 
 
 function PostWave({ userId }: { userId: string }) {
+  
     const router = useRouter();
     const pathname = usePathname();
   
