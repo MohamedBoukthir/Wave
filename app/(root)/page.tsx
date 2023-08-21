@@ -3,7 +3,7 @@ import { fetchWaves } from "@/lib/actions/wave.action";
 import { currentUser } from "@clerk/nextjs";
 
 export default async function Home() {
-  const result = await fetchWaves(1, 30);
+  const result = await fetchWaves(1, 20);
   const user = await currentUser();
 
   return (
