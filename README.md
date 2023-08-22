@@ -1,5 +1,5 @@
-### Waves: Unveiling the Next.js 13 App Phenomenon
-## DEMO : https://wave-pi.vercel.app/
+## Waves: Unveiling the Next.js 13 App Phenomenon
+### DEMO : https://wave-pi.vercel.app/
 ![wave](https://github.com/MohamedBoukthir/Wave/assets/124532428/999fc90d-9037-403c-90dc-ee8e57302914)
 
 ## Overview
