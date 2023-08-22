@@ -6,9 +6,9 @@ export const connectToDB = async () => {
     mongoose.set('strictQuery', true);
 
     if(!process.env.MONGODB_URL) 
-        return console.log('MONGODB_URL Not Found');
+        return console.log('Missing MongoDB URL');
     if(isConnected) 
-        return console.log('Already Connected To Mongo DB');
+        return console.log('MongoDB connection already established');
 
     
     try {

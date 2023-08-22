@@ -68,7 +68,7 @@ function Comment({ waveId, currentUserImg, currentUserId }: Props) {
                 <Input
                   type='text'
                   {...field}
-                  placeholder='Comment...'
+                  placeholder='Join the conversation...'
                   className='no-focus text-light-1 outline-none'
                 />
               </FormControl>

@@ -74,7 +74,8 @@ function PostWave({ userId }: { userId: string }) {
                   </FormLabel>
                   <FormControl className='no-focus border border-dark-4 bg-dark-3 text-light-1'>
                     <Textarea
-                        rows={15}
+                        rows={10}
+                        placeholder='Craft Your Universe . . .'
                         {...field}
                     />
                   </FormControl>

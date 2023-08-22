@@ -5,6 +5,8 @@ import { fetchWaveById } from "@/lib/actions/wave.action";
 import { currentUser } from "@clerk/nextjs";
 import { redirect } from "next/navigation";
 
+export const revalidate = 0;
+
 const Page = async ({ params }: { params: { id: string }}) => {
     
     if(!params.id) return null;
@@ -21,9 +23,8 @@ const Page = async ({ params }: { params: { id: string }}) => {
     <section className="relative">
         <div>
             <WaveCard
-                key={wave._id}
                 id={wave._id}
-                currentUserId={user?.id || ""}
+                currentUserId={user.id}
                 parentId={wave.parentId}
                 content={wave.text}
                 author={wave.author}
@@ -34,7 +35,7 @@ const Page = async ({ params }: { params: { id: string }}) => {
         </div>
         <div className='mt-7'>
             <Comment 
-                waveId={wave.id}
+                waveId={params.id}
                 currentUserImg={userInfo.image}
                 currentUserId={JSON.stringify(userInfo._id)}
             />
@@ -45,7 +46,7 @@ const Page = async ({ params }: { params: { id: string }}) => {
                 <WaveCard
                     key={childItem._id}
                     id={childItem._id}
-                    currentUserId={childItem?.id || ""}
+                    currentUserId={childItem.id}
                     parentId={childItem.parentId}
                     content={childItem.text}
                     author={childItem.author}

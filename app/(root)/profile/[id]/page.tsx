@@ -20,7 +20,7 @@ async function Page({ params }: { params: { id: string }}) {
         <section>
             <ProfileHeader
                 accountId={userInfo.id}
-                authUser={user.id}
+                authUserId={user.id}
                 name={userInfo.name}
                 username={userInfo.username}
                 imgUrl={userInfo.image}
@@ -44,7 +44,7 @@ async function Page({ params }: { params: { id: string }}) {
                                 </p>
                                 {tab.label === 'Waves' && (
                                     <p className='ml-1 rounded-sm bg-light-4 px-2 py-1 !text-tiny-medium text-light-2'>
-                                        {userInfo?.waves?.length}
+                                        {userInfo.waves.length}
                                     </p>
                                 )}
                             </TabsTrigger>
